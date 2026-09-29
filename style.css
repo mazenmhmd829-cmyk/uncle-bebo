@@ -1,0 +1,957 @@
+/* =========================================
+   RESET
+========================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+
+    font-family: "Montserrat", sans-serif;
+
+    background: #090909;
+
+    color: white;
+
+    overflow-x: hidden;
+}
+
+
+/* =========================================
+   BACKGROUND
+========================================= */
+
+.background {
+    position: fixed;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+
+    z-index: -3;
+
+    background: #0b0b0b;
+}
+
+
+/* Blurred image */
+
+.background::before {
+    content: "";
+
+    position: absolute;
+
+    inset: -40px;
+
+    background-image: url("background.jpg");
+
+    background-size: cover;
+
+    background-position: center;
+
+    filter: blur(24px);
+
+    transform: scale(1.12);
+
+    opacity: 0.82;
+}
+
+
+/* Original image */
+
+.background img {
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    width: auto;
+    height: 100%;
+
+    max-width: 100%;
+    max-height: 100%;
+
+    object-fit: contain;
+
+    transform: translate(-50%, -50%);
+
+    display: block;
+
+    opacity: 0.88;
+}
+
+
+/* =========================================
+   OVERLAY
+========================================= */
+
+.overlay {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: -2;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(0, 0, 0, 0.10) 0%,
+            rgba(0, 0, 0, 0.35) 45%,
+            rgba(0, 0, 0, 0.76) 100%
+        );
+
+    backdrop-filter: blur(1px);
+}
+
+
+/* =========================================
+   MAIN CONTAINER
+========================================= */
+
+.container {
+    width: 100%;
+
+    max-width: 570px;
+
+    min-height: 100vh;
+
+    margin: 0 auto;
+
+    padding: 42px 20px 30px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    position: relative;
+}
+
+
+/* =========================================
+   PROFILE
+========================================= */
+
+.profile {
+    opacity: 0;
+
+    transform: translateY(-35px) scale(0.8);
+
+    transition:
+        opacity 0.9s ease,
+        transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.profile.show {
+    opacity: 1;
+
+    transform:
+        translateY(0)
+        scale(1);
+}
+
+
+.profile-ring {
+    width: 158px;
+
+    height: 158px;
+
+    padding: 4px;
+
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff3a1 0%,
+            #ffd700 25%,
+            #ff9d00 55%,
+            #ffd700 80%,
+            #fff3a1 100%
+        );
+
+    box-shadow:
+        0 0 18px rgba(255, 215, 0, 0.45),
+        0 0 45px rgba(255, 175, 0, 0.18);
+
+    position: relative;
+
+    animation:
+        ringPulse 3s ease-in-out infinite;
+}
+
+
+.profile-image {
+    width: 100%;
+
+    height: 100%;
+
+    overflow: hidden;
+
+    border-radius: 50%;
+
+    background: #111;
+}
+
+
+.profile-image img {
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    object-position: center 25%;
+
+    display: block;
+
+    transition: transform 0.6s ease;
+}
+
+
+.profile-ring:hover .profile-image img {
+    transform: scale(1.06);
+}
+
+
+/* =========================================
+   WELCOME
+========================================= */
+
+.welcome {
+    margin-top: 30px;
+
+    text-align: center;
+
+    opacity: 0;
+
+    transform: translateY(30px);
+
+    transition:
+        opacity 0.9s ease 0.15s,
+        transform 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.15s;
+}
+
+.welcome.show {
+    opacity: 1;
+
+    transform: translateY(0);
+}
+
+
+.welcome-small {
+    font-size: 20px;
+
+    font-weight: 500;
+
+    color: #f4f4f4;
+
+    letter-spacing: 0.3px;
+
+    margin-bottom: 8px;
+
+    text-shadow:
+        0 3px 15px rgba(0, 0, 0, 0.9);
+}
+
+
+.welcome h1 {
+    font-size: clamp(45px, 10vw, 72px);
+
+    font-weight: 800;
+
+    line-height: 1;
+
+    letter-spacing: -1.8px;
+
+    color: #ffd12a;
+
+    text-shadow:
+        0 0 12px rgba(255, 200, 30, 0.28),
+        0 5px 28px rgba(0, 0, 0, 0.85);
+}
+
+
+.fire {
+    display: inline-block;
+
+    margin-left: 4px;
+
+    transform-origin: center;
+
+    animation:
+        fireMove 1.15s ease-in-out infinite;
+
+    filter:
+        drop-shadow(0 0 7px #ff7b00)
+        drop-shadow(0 0 17px #ff3d00);
+}
+
+
+/* Gold divider */
+
+.gold-line {
+    width: 150px;
+
+    height: 3px;
+
+    margin: 17px auto 0;
+
+    border-radius: 999px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #ffd12a,
+            transparent
+        );
+
+    box-shadow:
+        0 0 10px rgba(255, 200, 30, 0.35);
+
+    animation:
+        lineGlow 2.2s ease-in-out infinite;
+}
+
+
+/* =========================================
+   LINKS
+========================================= */
+
+.links {
+    width: 100%;
+
+    margin-top: 28px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+}
+
+
+/* =========================================
+   SOCIAL LINK
+========================================= */
+
+.social-link {
+    width: 100%;
+
+    min-height: 72px;
+
+    padding: 10px 16px 10px 10px;
+
+    display: flex;
+
+    align-items: center;
+
+    text-decoration: none;
+
+    color: white;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(18, 18, 18, 0.84),
+            rgba(7, 7, 7, 0.70)
+        );
+
+    border:
+        1px solid rgba(255, 210, 50, 0.34);
+
+    border-radius: 22px;
+
+    box-shadow:
+        0 10px 28px rgba(0, 0, 0, 0.32);
+
+    backdrop-filter: blur(14px);
+
+    -webkit-backdrop-filter: blur(14px);
+
+    position: relative;
+
+    overflow: hidden;
+
+    opacity: 0;
+
+    transform:
+        translateY(25px)
+        scale(0.97);
+
+    transition:
+        opacity 0.7s ease,
+        transform 0.35s ease,
+        background 0.35s ease,
+        border-color 0.35s ease,
+        box-shadow 0.35s ease;
+}
+
+
+/* Shine */
+
+.social-link::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -120%;
+
+    width: 70%;
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.10),
+            transparent
+        );
+
+    transform: skewX(-20deg);
+
+    transition: left 0.7s ease;
+}
+
+
+/* Show */
+
+.social-link.show {
+    opacity: 1;
+
+    transform:
+        translateY(0)
+        scale(1);
+}
+
+
+/* Hover */
+
+.social-link:hover {
+    transform:
+        translateY(-4px)
+        scale(1.015);
+
+    border-color:
+        rgba(255, 215, 65, 0.72);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(28, 28, 28, 0.92),
+            rgba(10, 10, 10, 0.84)
+        );
+
+    box-shadow:
+        0 15px 35px rgba(0, 0, 0, 0.42),
+        0 0 22px rgba(255, 200, 30, 0.10);
+}
+
+
+.social-link:hover::before {
+    left: 140%;
+}
+
+
+/* Press */
+
+.social-link:active {
+    transform:
+        scale(0.97);
+}
+
+
+/* =========================================
+   ICONS
+========================================= */
+
+.icon {
+    width: 50px;
+
+    height: 50px;
+
+    min-width: 50px;
+
+    border-radius: 15px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    margin-right: 14px;
+
+    font-size: 25px;
+
+    box-shadow:
+        0 6px 17px rgba(0, 0, 0, 0.30);
+
+    position: relative;
+
+    z-index: 2;
+}
+
+
+/* Instagram */
+
+.instagram {
+    background:
+        linear-gradient(
+            135deg,
+            #833ab4 0%,
+            #fd1d1d 52%,
+            #fcb045 100%
+        );
+}
+
+
+/* WhatsApp */
+
+.whatsapp {
+    background:
+        linear-gradient(
+            135deg,
+            #27d367,
+            #16b954
+        );
+}
+
+
+/* Kick */
+
+.kick {
+    background: #171717;
+
+    color: #53ff00;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 28px;
+
+    font-weight: 900;
+}
+
+
+/* TikTok */
+
+.tiktok {
+    background: #070707;
+
+    color: white;
+
+    text-shadow:
+        2px 2px #ff0050,
+        -2px -2px #00f2ea;
+}
+
+
+/* Snapchat */
+
+.snapchat {
+    background: #ffe600;
+
+    color: white;
+
+    text-shadow:
+        0 1px 3px rgba(0, 0, 0, 0.45);
+}
+
+
+/* =========================================
+   LINK CONTENT
+========================================= */
+
+.link-content {
+    min-width: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 3px;
+
+    position: relative;
+
+    z-index: 2;
+}
+
+
+.link-content span {
+    font-size: 16px;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+
+.link-content small {
+    font-size: 11px;
+
+    color: #a9a9a9;
+
+    font-weight: 500;
+}
+
+
+/* =========================================
+   ARROW
+========================================= */
+
+.arrow {
+    margin-left: auto;
+
+    color: #ffd12a;
+
+    font-size: 15px;
+
+    position: relative;
+
+    z-index: 2;
+
+    transition:
+        transform 0.3s ease;
+}
+
+
+.social-link:hover .arrow {
+    transform:
+        translate(3px, -3px);
+}
+
+
+/* =========================================
+   BOTTOM
+========================================= */
+
+.bottom {
+    margin-top: 45px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 15px;
+
+    opacity: 0;
+
+    transform: translateY(15px);
+
+    transition:
+        opacity 0.8s ease 1s,
+        transform 0.8s ease 1s;
+}
+
+.bottom.show {
+    opacity: 1;
+
+    transform: translateY(0);
+}
+
+
+.bottom span {
+    font-size: 10px;
+
+    font-weight: 600;
+
+    letter-spacing: 4px;
+
+    color: #d3d3d3;
+}
+
+
+.bottom-line {
+    width: 38px;
+
+    height: 2px;
+
+    border-radius: 999px;
+
+    background: #ffd12a;
+
+    box-shadow:
+        0 0 8px rgba(255, 210, 40, 0.5);
+}
+
+
+.scroll-icon {
+    margin-top: 18px;
+
+    color: #ffd12a;
+
+    font-size: 18px;
+
+    animation:
+        scrollMove 1.5s ease-in-out infinite;
+}
+
+
+/* =========================================
+   ANIMATIONS
+========================================= */
+
+@keyframes ringPulse {
+
+    0%,
+    100% {
+        box-shadow:
+            0 0 18px rgba(255, 215, 0, 0.45),
+            0 0 45px rgba(255, 175, 0, 0.18);
+    }
+
+    50% {
+        box-shadow:
+            0 0 25px rgba(255, 215, 0, 0.65),
+            0 0 60px rgba(255, 175, 0, 0.26);
+    }
+}
+
+
+@keyframes fire {
+
+    0% {
+        transform:
+            translateY(0)
+            rotate(0)
+            scale(1);
+    }
+
+    50% {
+        transform:
+            translateY(-6px)
+            rotate(-6deg)
+            scale(1.08);
+    }
+
+    100% {
+        transform:
+            translateY(0)
+            rotate(0)
+            scale(1);
+    }
+}
+
+
+@keyframes fireMove {
+
+    0%,
+    100% {
+        transform:
+            translateY(0)
+            rotate(0)
+            scale(1);
+    }
+
+    25% {
+        transform:
+            translateY(-3px)
+            rotate(-4deg)
+            scale(1.04);
+    }
+
+    50% {
+        transform:
+            translateY(-6px)
+            rotate(4deg)
+            scale(1.1);
+    }
+
+    75% {
+        transform:
+            translateY(-2px)
+            rotate(-3deg)
+            scale(1.04);
+    }
+}
+
+
+@keyframes lineGlow {
+
+    0%,
+    100% {
+        opacity: 0.65;
+
+        box-shadow:
+            0 0 8px rgba(255, 200, 30, 0.25);
+    }
+
+    50% {
+        opacity: 1;
+
+        box-shadow:
+            0 0 16px rgba(255, 200, 30, 0.65);
+    }
+}
+
+
+@keyframes scrollMove {
+
+    0%,
+    100% {
+        transform: translateY(0);
+
+        opacity: 0.55;
+    }
+
+    50% {
+        transform: translateY(7px);
+
+        opacity: 1;
+    }
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+
+    .container {
+        padding:
+            32px 16px 28px;
+    }
+
+
+    .profile-ring {
+        width: 138px;
+        height: 138px;
+    }
+
+
+    .welcome {
+        margin-top: 26px;
+    }
+
+
+    .welcome-small {
+        font-size: 17px;
+    }
+
+
+    .welcome h1 {
+        font-size: 46px;
+
+        letter-spacing: -1.3px;
+    }
+
+
+    .gold-line {
+        width: 125px;
+    }
+
+
+    .links {
+        margin-top: 24px;
+
+        gap: 10px;
+    }
+
+
+    .social-link {
+        min-height: 65px;
+
+        border-radius: 19px;
+
+        padding:
+            8px 14px 8px 8px;
+    }
+
+
+    .icon {
+        width: 46px;
+        height: 46px;
+        min-width: 46px;
+
+        margin-right: 12px;
+
+        border-radius: 13px;
+
+        font-size: 23px;
+    }
+
+
+    .link-content span {
+        font-size: 14px;
+    }
+
+
+    .link-content small {
+        font-size: 10px;
+    }
+
+
+    .arrow {
+        font-size: 13px;
+    }
+
+
+    .bottom {
+        margin-top: 38px;
+
+        gap: 10px;
+    }
+
+
+    .bottom span {
+        font-size: 8px;
+
+        letter-spacing: 2.8px;
+    }
+
+
+    .bottom-line {
+        width: 28px;
+    }
+}
+
+
+/* =========================================
+   VERY SMALL PHONES
+========================================= */
+
+@media (max-width: 380px) {
+
+    .welcome h1 {
+        font-size: 40px;
+    }
+
+
+    .welcome-small {
+        font-size: 15px;
+    }
+
+
+    .profile-ring {
+        width: 125px;
+        height: 125px;
+    }
+
+
+    .link-content small {
+        display: none;
+    }
+}
